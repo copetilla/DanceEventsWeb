@@ -12,7 +12,7 @@ export interface TypeEvent extends Document {
     price?: string;
     isFree: boolean;
     url?: string;
-    category: { _id: string, name: string };
+    style: { _id: string, name: string };
     organizer: { _id: string, firstName: string, lastName: string };
 };
 
@@ -27,7 +27,7 @@ const eventSchema = new Schema({
     price: { type: String, },
     isFree: { type: Boolean, default: false },
     url: { type: String },
-    category: { type: Schema.Types.ObjectId, ref: 'Category' },
+    style: { type: Schema.Types.ObjectId, ref: 'Style' },
     organizer: { type: Schema.Types.ObjectId, ref: 'User' }
 })
 

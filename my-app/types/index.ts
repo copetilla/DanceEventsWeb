@@ -25,7 +25,7 @@ export type CreateEventParams = {
         imageUrl: string
         startDateTime: Date
         endDateTime: Date
-        categoryId: string
+        styleId: string
         price: string
         isFree: boolean
         url: string
@@ -43,7 +43,7 @@ export type UpdateEventParams = {
         location: string
         startDateTime: Date
         endDateTime: Date
-        categoryId: string
+        styleId: string
         price: string
         isFree: boolean
         url: string
@@ -58,7 +58,7 @@ export type DeleteEventParams = {
 
 export type GetAllEventsParams = {
     query: string
-    category: string
+    style: string
     limit: number
     page: number
 }
@@ -69,8 +69,8 @@ export type GetEventsByUserParams = {
     page: number
 }
 
-export type GetRelatedEventsByCategoryParams = {
-    categoryId: string
+export type GetRelatedEventsByStyleParams = {
+    styleId: string
     eventId: string
     limit?: number
     page: number | string
