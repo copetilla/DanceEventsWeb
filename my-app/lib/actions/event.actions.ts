@@ -10,7 +10,7 @@ import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "../database";
 import Style from "../database/models/style.model";
 
-const getCategoryByName = async (name: string) => {
+const getStyleByName = async (name: string) => {
     return Style.findOne({ name: { $regex: name, $options: 'i' } })
 }
 
@@ -92,11 +92,17 @@ export async function getAllEvents({ query, limit = 6, page, style }: GetAllEven
     try {
         await connectToDatabase()
 
-        const conditions = {};
+        const titleCondition = query ? { title: { $regex: query, $options: 'i' } } : {}
+        const styleCondition = style ? await getStyleByName(style) : null
+        const conditions = {
+            $and: [titleCondition, styleCondition ? { style: styleCondition._id } : {}],
+        }
+
+        const skipAmount = (Number(page) - 1) * limit
 
         const eventsQuery = Event.find(conditions)
             .sort({ createdAt: 'desc' })
-            .skip(0)
+            .skip(skipAmount)
             .limit(limit);
 
         const events = await populateEvent(eventsQuery);
